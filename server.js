@@ -13,14 +13,16 @@ const app = express();
 
 //middlewares
 app.use(express.json());
+app.use(morgan("dev"));
 app.use(cors());
 
 //routes
 app.use("/api/v1/users", UserRoutes);
 
-app.use(morgan("dev"));
+//error handlers
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
+
 
 const port = process.env.PORT || 8080;
 

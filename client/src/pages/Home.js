@@ -15,7 +15,7 @@ const HomePage = () => {
         <div className="container mx-auto px-4">
           <div className="text-white text-center">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
-              Welcome to HCare !
+              Welcome to HCare 
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl">
               Providing quality healthcare services with compassion and
