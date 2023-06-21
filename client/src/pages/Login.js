@@ -18,7 +18,7 @@ const Login = () => {
       };
       console.log(data);
       try {
-        const resp = await axios.post(
+        const res = await axios.post(
           "http://localhost:8080/api/v1/users/login",
           data,
           {
@@ -27,11 +27,11 @@ const Login = () => {
             },
           }
         );
-        if (loggeduser.email && loggeduser.password) {
-          navigate("/");
-        }
-        else{
-          console.log("Doesnt Navigate")
+        if (res.status === 200) {
+          localStorage.setItem("token", res.data.token);
+          navigate("/appointment");
+        } else {
+          console.log("Doesnt Navigate");
         }
       } catch (error) {
         console.log(error);

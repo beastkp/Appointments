@@ -45,7 +45,7 @@ const Login = async (req, res) => {
 
     const token = user.createJwt();
     // res.status(200).json({ user: { name: user.name }, token });
-    res.status(200).send({message:"Successfull login ",status:true});
+    res.status(200).send({message:"Successfull login",status:true,token});
     
   } catch (error) {
     console.log(error);
