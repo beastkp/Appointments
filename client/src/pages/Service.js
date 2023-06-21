@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../components/Footer";
 
 const Services = () => {
   return (
@@ -75,6 +76,7 @@ const Services = () => {
           </div>
         </section>
       </main>
+      <Footer/>
     </div>
   );
 };

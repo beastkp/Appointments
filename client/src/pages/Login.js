@@ -1,22 +1,41 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState("");
+  const [loggeduser, setLoggeduser] = useState({ email: "", password: "" });
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    let data = {};
     // Performing login logic here
-    if (email && password) {
+    if (loggeduser.email && loggeduser.password) {
       console.log("Logged in");
-      const person = { email, password };
-      setUser((user) => {
-        return [...user, person];
-      });
-      console.log(user);
-      setEmail("");
-      setPassword("");
+      data = {
+        email: loggeduser.email,
+        password: loggeduser.password,
+      };
+      console.log(data);
+      try {
+        const resp = await axios.post(
+          "http://localhost:8080/api/v1/users/login",
+          data,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (loggeduser.email && loggeduser.password) {
+          navigate("/");
+        }
+        else{
+          console.log("Doesnt Navigate")
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       console.log("Not logged in ");
     }
@@ -39,9 +58,12 @@ const Login = () => {
               id="email"
               type="email"
               placeholder="Enter your email"
-              value={email}
+              value={loggeduser.email}
               onChange={(e) => {
-                setEmail(e.target.value);
+                setLoggeduser((prevState) => ({
+                  ...prevState,
+                  email: e.target.value,
+                }));
               }}
               required
             />
@@ -58,9 +80,12 @@ const Login = () => {
               id="password"
               type="password"
               placeholder="Enter your password"
-              value={password}
+              value={loggeduser.password}
               onChange={(e) => {
-                setPassword(e.target.value);
+                setLoggeduser((prevState) => ({
+                  ...prevState,
+                  password: e.target.value,
+                }));
               }}
               required
             />

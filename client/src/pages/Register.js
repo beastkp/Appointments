@@ -1,42 +1,45 @@
 import React, { useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
-import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Register = () => {
-    const [user, setUser] = useState({
-      name: "",
-      email: "",  
-      password: "",
-    });
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const navigate = useNavigate();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let data={};
+    let data = {};
     // Performing registration logic here
-    if(user.name && user.email && user.password){
+    if (user.name && user.email && user.password) {
       console.log("User Registered");
       data = {
         name: user.name,
         email: user.email,
-        password: user.password
+        password: user.password,
       };
       console.log(user);
     }
     console.log(user);
 
     try {
-      const res = await axios.post('http://localhost:8080/api/v1/users/register',data,{
-        headers:{
-          'Content-Type':'application/json'
+      const res = await axios.post(
+        "http://localhost:8080/api/v1/users/register",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
-      if(res.data.success){
+      );
+      if (res.data.success) {
         // message.success('Registered Successfully');
         navigate("/login");
-      }
-      else{
+      } else {
         console.log("Not registered");
       }
     } catch (error) {
