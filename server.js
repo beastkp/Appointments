@@ -5,6 +5,7 @@ const connectDB = require("./db/connect");
 const UserRoutes = require("./routes/UserRoutes");
 const notFoundMiddleware = require("./middleware/not-found");
 const errorMiddleware = require("./middleware/error-handler");
+const authenticateUser = require("./middleware/authorization")
 const cors = require("cors");
 require("dotenv").config();
 
