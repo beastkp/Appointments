@@ -30,6 +30,19 @@ const BookingForm = () => {
           />
         </div>
         <div className="mb-4">
+          <label className="block mb-2 font-bold" htmlFor="name">
+            Illness
+          </label>
+          <input
+            type="text"
+            id="illness"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+            required
+          />
+        </div>  
+        <div className="mb-4">
           <label className="block mb-2 font-bold" htmlFor="email">
             Email
           </label>

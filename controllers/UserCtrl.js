@@ -24,11 +24,12 @@ const Register = async (req, res) => {
     // res.status(201).json({tempUser});
     //instead of user send token
     // res.status(201).json({ user: { name: user.name }, token }).send({message:"Successful",success:true});
-    res.status(201).send({message:"Successful",success:true});
+    res.status(201).send({ message: "Successful", success: true });
   } catch (error) {
     console.log(error);
   }
 };
+
 const Login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -45,11 +46,30 @@ const Login = async (req, res) => {
 
     const token = user.createJwt();
     // res.status(200).json({ user: { name: user.name }, token });
-    res.status(200).send({message:"Successfull login",status:true,token});
-    
+    res.status(200).send({ message: "Successfull login", status: true, token });
   } catch (error) {
     console.log(error);
   }
 };
 
-module.exports = { Login, Register };
+const authCtrl = async (req, res) => {
+  try {
+    const user = await users.findById({ _id: req.user.userId });
+    if (!user) {
+      res.status(200).send({ message: "user not found", success: false });
+    } else {
+      res
+        .status(200)
+        .send({
+          message: "Successful",
+          success: true,
+          data: { name: user.name, email: user.email },
+        });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "auth error", success: false, error });
+  }
+};
+
+module.exports = { Login, Register, authCtrl };

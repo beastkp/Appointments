@@ -6,7 +6,8 @@ require('dotenv').config();
 const auth = async (req,res,next)=>{
     const authHeader = req.headers.authorization;
     if(!authHeader ||!authHeader.startsWith("Bearer")){
-        throw new UnauthenticatedError("Authentication Invalid");
+        // throw new UnauthenticatedError("Authentication Invalid");
+        console.log("Backend here!!, no token ")
     }
     const token = authHeader.split(' ')[1];
     
