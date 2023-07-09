@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { showLoading,hideLoading } from "../redux/features/alertSlice";
 
 const Register = () => {
+  const dispatch = useDispatch()
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -27,6 +30,7 @@ const Register = () => {
     console.log(user);
 
     try {
+      dispatch(showLoading());
       const res = await axios.post(
         "http://localhost:8080/api/v1/users/register",
         data,
@@ -36,6 +40,7 @@ const Register = () => {
           },
         }
       );
+      dispatch(hideLoading())
       if (res.data.success) {
         // message.success('Registered Successfully');
         navigate("/login");
@@ -44,6 +49,7 @@ const Register = () => {
       }
     } catch (error) {
       console.log(error);
+      dispatch(hideLoading())
     }
   };
 

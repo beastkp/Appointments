@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { showLoading,hideLoading } from "../redux/features/alertSlice";
 import axios from "axios";
 
 const Login = () => {
   const [loggeduser, setLoggeduser] = useState({ email: "", password: "" });
+  const dispatch  = useDispatch();
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -18,6 +21,7 @@ const Login = () => {
       };
       console.log(data);
       try {
+        dispatch(showLoading());
         const res = await axios.post(
           "http://localhost:8080/api/v1/users/login",
           data,
@@ -27,6 +31,7 @@ const Login = () => {
             },
           }
         );
+        dispatch(hideLoading())
         if (res.status === 200) {
           localStorage.setItem("token", res.data.token);
           navigate("/");
@@ -35,6 +40,7 @@ const Login = () => {
         }
       } catch (error) {
         console.log(error);
+        dispatch(hideLoading())
       }
     } else {
       console.log("Not logged in ");
