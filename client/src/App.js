@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import Spinner from "./components/Spinner";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
+import Profile from "./pages/Profile";
 
 function App() {
   const { loading } = useSelector((store) => store.alerts);
@@ -47,6 +48,7 @@ function App() {
               </PublicRoute>
             }
           />
+
           <Route
             path="/about"
             element={
@@ -55,6 +57,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/contact"
             element={
@@ -63,6 +66,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/services"
             element={
@@ -71,6 +75,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/appointment"
             element={
@@ -79,6 +84,15 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          /> */}
         </Routes>
       )}
     </Router>

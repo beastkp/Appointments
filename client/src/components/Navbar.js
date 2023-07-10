@@ -37,9 +37,18 @@ const Navbar = () => {
           </ul>
         </div>
         <div>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            <Link to="/register">Get in Touch</Link>
-          </button>
+          <div className="flex flex-wrap items-center justify-between">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              <Link to="/appointment">Get in Touch</Link>
+            </button>
+            <Link to="/profile" className="ml-4">
+              <img
+                src="https://th.bing.com/th/id/OIP.1yoSL-WO0YU5mQKROudvswHaHa?pid=ImgDet&rs=1" // Replace with the URL of the profile icon
+                alt="Profile"
+                className="h-8 w-8 rounded-3xl mx-4"
+              />
+            </Link>
+          </div>
         </div>
       </div>
     </nav>

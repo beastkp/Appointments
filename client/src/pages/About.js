@@ -66,7 +66,7 @@ const About = () => {
               className="w-full h-auto rounded-lg"
             />
           </div>
-          <div>
+          <div >
             <h3 className="text-2xl text-gray-800 font-bold mb-4">
               No Extra Expense
             </h3>
@@ -87,7 +87,9 @@ const About = () => {
           </div>
         </div>
       </div>
+      <div className="p-5">
       <Footer/>
+      </div>
     </section>
   );
 };
