@@ -6,7 +6,8 @@ import { openModal,closeModal } from "../redux/features/modalSlice";
 import Modal from "../components/Modal";
 
 const BookingForm = () => {
-  // const {isOpen} = useSelector((store)=>store.modal);
+  const {isOpen} = useSelector((store)=>store.modal);
+  const {loading} = useSelector((store)=>store.alerts);
 
   const dispatch = useDispatch();
   const [appnt, setAppnt] = useState({
@@ -61,6 +62,7 @@ const BookingForm = () => {
   return (
     <div className="max-w-md mx-auto bg-white p-6 rounded shadow-lg">
       <h2 className="text-2xl font-bold mb-4">Book an Appointment</h2>
+      {isOpen && <Modal/>}
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block mb-2 font-bold" htmlFor="name">
