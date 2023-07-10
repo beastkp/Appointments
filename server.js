@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const colors = require("colors");
 const connectDB = require("./db/connect");
 const UserRoutes = require("./routes/UserRoutes");
+const AppointmentRoute = require('./routes/AppointmentRoute');
 const notFoundMiddleware = require("./middleware/not-found");
 const errorMiddleware = require("./middleware/error-handler");
 const authenticateUser = require("./middleware/authorization")
@@ -19,6 +20,7 @@ app.use(cors());
 
 //routes
 app.use("/api/v1/users", UserRoutes);
+app.use("/api/v1/appointments", authenticateUser,AppointmentRoute);
 
 //error handlers
 app.use(notFoundMiddleware);

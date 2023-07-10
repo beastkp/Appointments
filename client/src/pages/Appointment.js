@@ -1,15 +1,61 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { hideLoading, showLoading } from "../redux/features/alertSlice";
+import axios from "axios";
+import { openModal,closeModal } from "../redux/features/modalSlice";
+import Modal from "../components/Modal";
 
 const BookingForm = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  // const {isOpen} = useSelector((store)=>store.modal);
 
-  const handleSubmit = (e) => {
+  const dispatch = useDispatch();
+  const [appnt, setAppnt] = useState({
+    name: "",
+    illness: "",
+    email: "",
+    date: "",
+    time: "",
+  });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission logic here
-    console.log("Form submitted:", { name, email, date, time });
+    let data = {};
+    if (
+      appnt.name &&
+      appnt.illness &&
+      appnt.illness &&
+      appnt.date &&
+      appnt.time
+    ) {
+      console.log("All Details Provided");
+      data = {
+        name: appnt.name,
+        illness: appnt.illness,
+        email: appnt.email,
+        date: appnt.date,
+        time: appnt.time,
+      };
+      try {
+        dispatch(showLoading());
+        const res = await axios.post(
+          "http://localhost:8080/api/v1/appointments/makeappointment",
+          data,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+        dispatch(openModal());
+        dispatch(hideLoading());
+        if(res.status === 200){
+          console.log(res.data);
+          // dispatch(openModal());
+        }
+      } catch (error) {}
+    }
   };
 
   return (
@@ -23,8 +69,13 @@ const BookingForm = () => {
           <input
             type="text"
             id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={appnt.name}
+            onChange={(e) => {
+              setAppnt((prevState) => ({
+                ...prevState,
+                name: e.target.value,
+              }));
+            }}
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
             required
           />
@@ -36,12 +87,17 @@ const BookingForm = () => {
           <input
             type="text"
             id="illness"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={appnt.illness}
+            onChange={(e) => {
+              setAppnt((prevState) => ({
+                ...prevState,
+                illness: e.target.value,
+              }));
+            }}
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
             required
           />
-        </div>  
+        </div>
         <div className="mb-4">
           <label className="block mb-2 font-bold" htmlFor="email">
             Email
@@ -49,8 +105,13 @@ const BookingForm = () => {
           <input
             type="email"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={appnt.email}
+            onChange={(e) => {
+              setAppnt((prevState) => ({
+                ...prevState,
+                email: e.target.value,
+              }));
+            }}
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
             required
           />
@@ -62,8 +123,13 @@ const BookingForm = () => {
           <input
             type="date"
             id="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+            value={appnt.date}
+            onChange={(e) => {
+              setAppnt((prevState) => ({
+                ...prevState,
+                date: e.target.value,
+              }));
+            }}
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
             required
           />
@@ -75,8 +141,13 @@ const BookingForm = () => {
           <input
             type="time"
             id="time"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
+            value={appnt.time}
+            onChange={(e) => {
+              setAppnt((prevState) => ({
+                ...prevState,
+                time: e.target.value,
+              }));
+            }}
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
             required
           />

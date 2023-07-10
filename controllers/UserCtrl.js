@@ -64,6 +64,7 @@ const authCtrl = async (req, res) => {
           message: "Successful",
           success: true,
           data: { name: user.name, email: user.email },
+          //this data goes to the frontend via a post request it is used in protected route section of client to store the profile info of the user logged in though redux 
         });
     }
   } catch (error) {
